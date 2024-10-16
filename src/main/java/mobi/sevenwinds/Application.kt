@@ -80,23 +80,29 @@ fun Application.module() {
         val log = LoggerFactory.getLogger("InternalError")
 
         exception<NotFoundException> { cause ->
+            println(cause.message)
             call.respond(HttpStatusCode.NotFound, cause.message ?: "")
         }
         exception<OpenAPIRequiredFieldException> { cause ->
+            println(cause.message)
             call.respond(HttpStatusCode.BadRequest, cause.message ?: "")
         }
         exception<MissingKotlinParameterException> { cause ->
+            println(cause.message)
             call.respond(HttpStatusCode.BadRequest, cause.message ?: "")
         }
         exception<ConstraintViolation> { cause ->
+            println(cause.message)
             call.respond(HttpStatusCode.BadRequest, cause.message ?: "")
         }
         exception<IllegalArgumentException> { cause ->
+            println(cause.message)
             call.respond(HttpStatusCode.BadRequest, cause.message ?: "")
             cause.printStackTrace()
             log.error("", cause)
         }
         exception<Throwable> { cause ->
+            println(cause.message)
             call.respond(HttpStatusCode.InternalServerError, cause.message ?: "")
             cause.printStackTrace()
             log.error("", cause)
